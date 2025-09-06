@@ -1,4 +1,4 @@
-﻿/* Admin Panel CSS - Simplified */
+﻿/* Admin Panel CSS - Responsive Version */
 * {
     margin: 0;
     padding: 0;
@@ -163,6 +163,7 @@ body {
     overflow: hidden;
 }
 
+/* Desktop Table */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -190,15 +191,26 @@ th {
 .item-actions {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .btn-edit, .btn-delete {
-    padding: 5px 10px;
+    padding: 8px 12px;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 12px;
+    font-weight: 600;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 80px;
+    justify-content: center;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .btn-edit {
@@ -208,15 +220,18 @@ th {
 
 .btn-edit:hover {
     background: #138496;
+    transform: translateY(-1px);
 }
 
 .btn-delete {
     background: #dc3545;
     color: white;
+    width: 70px;
 }
 
 .btn-delete:hover {
     background: #c82333;
+    transform: translateY(-1px);
 }
 
 /* Modal */
@@ -311,7 +326,7 @@ th {
     margin-top: 30px;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
     .admin-main {
         padding: 20px;
@@ -331,12 +346,44 @@ th {
         margin: 10% auto;
     }
     
+    /* Table responsive - hide some columns on mobile */
     table {
         font-size: 12px;
     }
     
     th, td {
-        padding: 8px;
+        padding: 8px 4px;
+    }
+    
+    /* Hide description column on mobile */
+    th:nth-child(5), td:nth-child(5) {
+        display: none;
+    }
+    
+    /* Make image smaller on mobile */
+    .item-image {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Make buttons stack vertically on mobile */
+    .item-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn-edit, .btn-delete {
+        min-width: 70px;
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
     }
 }
 
@@ -355,5 +402,91 @@ th {
     
     .section-header h1 {
         font-size: 2rem;
+    }
+    
+    /* Further reduce table size on very small screens */
+    table {
+        font-size: 11px;
+    }
+    
+    th, td {
+        padding: 6px 2px;
+    }
+    
+    /* Hide image column on very small screens */
+    th:nth-child(1), td:nth-child(1) {
+        display: none;
+    }
+    
+    /* Make buttons even smaller */
+    .btn-edit, .btn-delete {
+        min-width: 60px;
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+    
+    /* Stack category and price in same cell */
+    td:nth-child(3)::after {
+        content: " - " attr(data-price);
+        color: #d4af37;
+        font-weight: bold;
+    }
+}
+
+/* Very small screens - convert to card layout */
+@media (max-width: 360px) {
+    .menu-items-table {
+        background: transparent;
+        box-shadow: none;
+    }
+    
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    tr {
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    td {
+        border: none;
+        position: relative;
+        padding: 8px 0;
+        padding-left: 50%;
+    }
+    
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .item-actions {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .btn-edit, .btn-delete {
+        flex: 1;
+        max-width: 100px;
+        padding: 8px 12px;
+        font-size: 12px;
     }
 }
