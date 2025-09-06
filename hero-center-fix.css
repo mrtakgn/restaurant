@@ -1,0 +1,120 @@
+﻿/* Hero Section - Center Fix */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 70px 20px 50px;
+}
+
+.hero-content {
+    flex: 1;
+    padding: 0 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center; /* Ortaya hizalama eklendi */
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-align: center; /* Başlık ortaya hizalandı */
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-align: center; /* Alt başlık ortaya hizalandı */
+}
+
+.cta-button {
+    display: inline-block;
+    background: #d4af37;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    margin: 0 auto; /* Buton ortaya hizalandı */
+}
+
+.cta-button:hover {
+    background: #b8941f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Responsive Design - Hero Center Fix */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 100px 15px 40px;
+        min-height: auto;
+    }
+    
+    .hero-content {
+        padding: 0;
+        margin-bottom: 25px;
+        max-width: 100%;
+        text-align: center; /* Mobilde de ortaya hizalama */
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+        text-align: center; /* Mobilde başlık ortaya */
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        text-align: center; /* Mobilde alt başlık ortaya */
+    }
+    
+    .cta-button {
+        margin: 0 auto; /* Mobilde buton ortaya */
+    }
+    
+    .hero-image {
+        margin-top: 15px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 100px 10px 30px;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+}

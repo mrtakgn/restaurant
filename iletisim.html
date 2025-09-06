@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezzet Durağı - İletişim</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Lezzet Durağı</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="hakkimizda.html" class="nav-link">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="menu.html" class="nav-link">Menü</a>
+                </li>
+                <li class="nav-item">
+                    <a href="iletisim.html" class="nav-link active">İletişim</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact" style="padding-top: 120px;">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>İletişim</h2>
+                <p>Bizimle iletişime geçin</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info fade-in fade-in-delay-1">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Adres</h3>
+                            <p>Atatürk Caddesi No: 123<br>Kadıköy, İstanbul 34710</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Telefon</h3>
+                            <p>+90 216 123 45 67<br>+90 216 123 45 68</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>E-posta</h3>
+                            <p>info@lezzetduragi.com<br>rezervasyon@lezzetduragi.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Çalışma Saatleri</h3>
+                            <p>Pazartesi - Pazar<br>11:00 - 23:00</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-utensils"></i>
+                        <div>
+                            <h3>Rezervasyon</h3>
+                            <p>Online rezervasyon için<br>menümüzü inceleyin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form fade-in fade-in-delay-2">
+                    <h3>Bize Mesaj Gönderin</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Adınız Soyadınız" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Telefon Numaranız">
+                        </div>
+                        <div class="form-group">
+                            <select id="subject" name="subject" required>
+                                <option value="">Konu Seçiniz</option>
+                                <option value="rezervasyon">Rezervasyon</option>
+                                <option value="sikayet">Şikayet</option>
+                                <option value="oneri">Öneri</option>
+                                <option value="genel">Genel Bilgi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Mesajınız" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Mesaj Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section" style="padding: 0; height: 400px;">
+        <div class="fade-in" style="height: 100%;">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.2795570886447!2d29.02772031541084!3d40.988876979325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5bd6577d2a1%3A0x686cfd3c8b8a8b8a!2sKad%C4%B1k%C3%B6y%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1635789012345!5m2!1str!2str" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section fade-in">
+                    <h3>Lezzet Durağı</h3>
+                    <p>Geleneksel lezzetlerimizi modern sunumla buluşturuyoruz.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section fade-in fade-in-delay-1">
+                    <h3>Hızlı Linkler</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="menu.html">Menü</a></li>
+                        <li><a href="iletisim.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section fade-in fade-in-delay-2">
+                    <h3>İletişim Bilgileri</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Atatürk Caddesi No: 123, Kadıköy</p>
+                    <p><i class="fas fa-phone"></i> +90 216 123 45 67</p>
+                    <p><i class="fas fa-envelope"></i> info@lezzetduragi.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom fade-in fade-in-delay-3">
+                <p>&copy; 2024 Lezzet Durağı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Contact Form Handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                alert('Lütfen tüm zorunlu alanları doldurun.');
+                return;
+            }
+            
+            // Simulate form submission
+            alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+            this.reset();
+        });
+
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+    </script>
+</body>
+</html>

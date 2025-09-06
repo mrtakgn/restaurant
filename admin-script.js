@@ -1,0 +1,273 @@
+﻿// Admin Panel JavaScript
+let menuItems = [];
+let editingItemId = null;
+let deleteItemId = null;
+
+// Initialize admin panel
+document.addEventListener('DOMContentLoaded', function() {
+    loadMenuItems();
+    setupEventListeners();
+});
+
+// Load menu items from localStorage or default data
+function loadMenuItems() {
+    const savedItems = localStorage.getItem('menuItems');
+    if (savedItems) {
+        menuItems = JSON.parse(savedItems);
+    } else {
+        // Default menu items
+        menuItems = [
+            {
+                id: 1,
+                name: 'Mercimek Çorbası',
+                category: 'soups',
+                price: 25,
+                description: 'Geleneksel tarifimizle hazırlanan nefis mercimek çorbası',
+                image: 'https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            },
+            {
+                id: 2,
+                name: 'Yayla Çorbası',
+                category: 'soups',
+                price: 28,
+                description: 'Yoğurt ve pirinçle hazırlanan geleneksel çorba',
+                image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            },
+            {
+                id: 3,
+                name: 'Adana Kebap',
+                category: 'mains',
+                price: 85,
+                description: 'Acılı kıyma ile hazırlanan geleneksel Adana kebap',
+                image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            },
+            {
+                id: 4,
+                name: 'Tavuk Şinitzel',
+                category: 'mains',
+                price: 65,
+                description: 'Çıtır kaplamalı tavuk göğsü, patates kızartması ile',
+                image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            },
+            {
+                id: 5,
+                name: 'Baklava',
+                category: 'desserts',
+                price: 35,
+                description: 'Geleneksel tarifimizle hazırlanan cevizli baklava',
+                image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            },
+            {
+                id: 6,
+                name: 'Türk Kahvesi',
+                category: 'beverages',
+                price: 15,
+                description: 'Geleneksel yöntemle pişirilen Türk kahvesi',
+                image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            }
+        ];
+        saveMenuItems();
+    }
+    renderMenuItems();
+}
+
+// Save menu items to localStorage
+function saveMenuItems() {
+    localStorage.setItem('menuItems', JSON.stringify(menuItems));
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    // Search functionality
+    document.getElementById('search-items').addEventListener('input', filterItems);
+    
+    // Category filter
+    document.getElementById('category-filter').addEventListener('change', filterItems);
+}
+
+// Render menu items in table
+function renderMenuItems(items = menuItems) {
+    const tbody = document.getElementById('menu-items-tbody');
+    tbody.innerHTML = '';
+
+    if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">Henüz ürün eklenmemiş</td></tr>';
+        return;
+    }
+
+    items.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>
+                <img src="${item.image || 'https://via.placeholder.com/50x50?text=Resim'}" 
+                     alt="${item.name}" class="item-image">
+            </td>
+            <td>${item.name}</td>
+            <td>${getCategoryName(item.category)}</td>
+            <td>₺${item.price}</td>
+            <td>${item.description}</td>
+            <td>
+                <div class="item-actions">
+                    <button class="btn-edit" onclick="editItem(${item.id})">
+                        <i class="fas fa-edit"></i> Düzenle
+                    </button>
+                    <button class="btn-delete" onclick="deleteItem(${item.id})">
+                        <i class="fas fa-trash"></i> Sil
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Get category name in Turkish
+function getCategoryName(category) {
+    const categories = {
+        'soups': 'Çorbalar',
+        'mains': 'Ana Yemekler',
+        'desserts': 'Tatlılar',
+        'beverages': 'İçecekler'
+    };
+    return categories[category] || category;
+}
+
+// Filter items based on search and category
+function filterItems() {
+    const searchTerm = document.getElementById('search-items').value.toLowerCase();
+    const categoryFilter = document.getElementById('category-filter').value;
+    
+    let filteredItems = menuItems.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
+                             item.description.toLowerCase().includes(searchTerm);
+        const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
+        return matchesSearch && matchesCategory;
+    });
+    
+    renderMenuItems(filteredItems);
+}
+
+// Open add item modal
+function openAddItemModal() {
+    editingItemId = null;
+    document.getElementById('modal-title').textContent = 'Yeni Ürün Ekle';
+    document.getElementById('item-form').reset();
+    document.getElementById('item-modal').style.display = 'block';
+}
+
+// Edit item
+function editItem(id) {
+    const item = menuItems.find(item => item.id === id);
+    if (!item) return;
+    
+    editingItemId = id;
+    document.getElementById('modal-title').textContent = 'Ürünü Düzenle';
+    document.getElementById('item-name').value = item.name;
+    document.getElementById('item-category').value = item.category;
+    document.getElementById('item-price').value = item.price;
+    document.getElementById('item-description').value = item.description;
+    document.getElementById('item-image').value = item.image || '';
+    document.getElementById('item-modal').style.display = 'block';
+}
+
+// Save item (add or edit)
+function saveItem(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('item-name').value;
+    const category = document.getElementById('item-category').value;
+    const price = parseFloat(document.getElementById('item-price').value);
+    const description = document.getElementById('item-description').value;
+    const image = document.getElementById('item-image').value;
+    
+    if (editingItemId) {
+        // Edit existing item
+        const itemIndex = menuItems.findIndex(item => item.id === editingItemId);
+        if (itemIndex !== -1) {
+            menuItems[itemIndex] = {
+                ...menuItems[itemIndex],
+                name,
+                category,
+                price,
+                description,
+                image
+            };
+        }
+    } else {
+        // Add new item
+        const newId = Math.max(...menuItems.map(item => item.id), 0) + 1;
+        menuItems.push({
+            id: newId,
+            name,
+            category,
+            price,
+            description,
+            image
+        });
+    }
+    
+    saveMenuItems();
+    renderMenuItems();
+    closeModal();
+    
+    // Show success message
+    alert(editingItemId ? 'Ürün başarıyla güncellendi!' : 'Ürün başarıyla eklendi!');
+}
+
+// Delete item
+function deleteItem(id) {
+    const item = menuItems.find(item => item.id === id);
+    if (!item) return;
+    
+    deleteItemId = id;
+    document.getElementById('delete-item-name').textContent = item.name;
+    document.getElementById('delete-modal').style.display = 'block';
+}
+
+// Confirm delete
+function confirmDelete() {
+    if (deleteItemId) {
+        menuItems = menuItems.filter(item => item.id !== deleteItemId);
+        saveMenuItems();
+        renderMenuItems();
+        closeDeleteModal();
+        alert('Ürün başarıyla silindi!');
+    }
+}
+
+// Close modal
+function closeModal() {
+    document.getElementById('item-modal').style.display = 'none';
+    editingItemId = null;
+}
+
+// Close delete modal
+function closeDeleteModal() {
+    document.getElementById('delete-modal').style.display = 'none';
+    deleteItemId = null;
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    const itemModal = document.getElementById('item-modal');
+    const deleteModal = document.getElementById('delete-modal');
+    
+    if (event.target === itemModal) {
+        closeModal();
+    }
+    if (event.target === deleteModal) {
+        closeDeleteModal();
+    }
+}
+
+// Export menu to JSON
+function exportMenu() {
+    const dataStr = JSON.stringify(menuItems, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'menu-items.json';
+    link.click();
+    URL.revokeObjectURL(url);
+}
