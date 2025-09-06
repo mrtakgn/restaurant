@@ -1,4 +1,4 @@
-﻿// Admin Panel JavaScript
+﻿// Admin Panel JavaScript - Responsive Version
 let menuItems = [];
 let editingItemId = null;
 let deleteItemId = null;
@@ -9,66 +9,83 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
 });
 
+// Clear localStorage and reload default data
+function clearAndReloadData() {
+    localStorage.removeItem('menuItems');
+    loadMenuItems();
+    alert('Veriler temizlendi ve varsayılan ürünler yüklendi!');
+}
+
 // Load menu items from localStorage or default data
 function loadMenuItems() {
     const savedItems = localStorage.getItem('menuItems');
     if (savedItems) {
-        menuItems = JSON.parse(savedItems);
+        try {
+            menuItems = JSON.parse(savedItems);
+        } catch (e) {
+            console.error('localStorage verisi bozuk, varsayılan veriler yükleniyor...');
+            menuItems = getDefaultMenuItems();
+            saveMenuItems();
+        }
     } else {
-        // Default menu items
-        menuItems = [
-            {
-                id: 1,
-                name: 'Mercimek Çorbası',
-                category: 'soups',
-                price: 25,
-                description: 'Geleneksel tarifimizle hazırlanan nefis mercimek çorbası',
-                image: 'https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            },
-            {
-                id: 2,
-                name: 'Yayla Çorbası',
-                category: 'soups',
-                price: 28,
-                description: 'Yoğurt ve pirinçle hazırlanan geleneksel çorba',
-                image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            },
-            {
-                id: 3,
-                name: 'Adana Kebap',
-                category: 'mains',
-                price: 85,
-                description: 'Acılı kıyma ile hazırlanan geleneksel Adana kebap',
-                image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            },
-            {
-                id: 4,
-                name: 'Tavuk Şinitzel',
-                category: 'mains',
-                price: 65,
-                description: 'Çıtır kaplamalı tavuk göğsü, patates kızartması ile',
-                image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            },
-            {
-                id: 5,
-                name: 'Baklava',
-                category: 'desserts',
-                price: 35,
-                description: 'Geleneksel tarifimizle hazırlanan cevizli baklava',
-                image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            },
-            {
-                id: 6,
-                name: 'Türk Kahvesi',
-                category: 'beverages',
-                price: 15,
-                description: 'Geleneksel yöntemle pişirilen Türk kahvesi',
-                image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            }
-        ];
+        menuItems = getDefaultMenuItems();
         saveMenuItems();
     }
     renderMenuItems();
+}
+
+// Get default menu items
+function getDefaultMenuItems() {
+    return [
+        {
+            id: 1,
+            name: 'Mercimek Çorbası',
+            category: 'soups',
+            price: 25,
+            description: 'Geleneksel tarifimizle hazırlanan nefis mercimek çorbası',
+            image: 'https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        },
+        {
+            id: 2,
+            name: 'Yayla Çorbası',
+            category: 'soups',
+            price: 28,
+            description: 'Yoğurt ve pirinçle hazırlanan geleneksel çorba',
+            image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        },
+        {
+            id: 3,
+            name: 'Adana Kebap',
+            category: 'mains',
+            price: 85,
+            description: 'Acılı kıyma ile hazırlanan geleneksel Adana kebap',
+            image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        },
+        {
+            id: 4,
+            name: 'Tavuk Şinitzel',
+            category: 'mains',
+            price: 65,
+            description: 'Çıtır kaplamalı tavuk göğsü, patates kızartması ile',
+            image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        },
+        {
+            id: 5,
+            name: 'Baklava',
+            category: 'desserts',
+            price: 35,
+            description: 'Geleneksel tarifimizle hazırlanan cevizli baklava',
+            image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        },
+        {
+            id: 6,
+            name: 'Türk Kahvesi',
+            category: 'beverages',
+            price: 15,
+            description: 'Geleneksel yöntemle pişirilen Türk kahvesi',
+            image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        }
+    ];
 }
 
 // Save menu items to localStorage
@@ -95,28 +112,70 @@ function renderMenuItems(items = menuItems) {
         return;
     }
 
-    items.forEach(item => {
+    items.forEach(function(item) {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>
-                <img src="${item.image || 'https://via.placeholder.com/50x50?text=Resim'}" 
-                     alt="${item.name}" class="item-image">
-            </td>
-            <td>${item.name}</td>
-            <td>${getCategoryName(item.category)}</td>
-            <td>₺${item.price}</td>
-            <td>${item.description}</td>
-            <td>
-                <div class="item-actions">
-                    <button class="btn-edit" onclick="editItem(${item.id})">
-                        <i class="fas fa-edit"></i> Düzenle
-                    </button>
-                    <button class="btn-delete" onclick="deleteItem(${item.id})">
-                        <i class="fas fa-trash"></i> Sil
-                    </button>
-                </div>
-            </td>
-        `;
+        
+        // Create image cell
+        const imgCell = document.createElement('td');
+        imgCell.setAttribute('data-label', 'Resim');
+        const img = document.createElement('img');
+        img.src = item.image || 'https://via.placeholder.com/50x50?text=Resim';
+        img.alt = item.name;
+        img.className = 'item-image';
+        imgCell.appendChild(img);
+        
+        // Create name cell
+        const nameCell = document.createElement('td');
+        nameCell.setAttribute('data-label', 'Ürün Adı');
+        nameCell.textContent = item.name;
+        
+        // Create category cell
+        const categoryCell = document.createElement('td');
+        categoryCell.setAttribute('data-label', 'Kategori');
+        categoryCell.setAttribute('data-price', '₺' + item.price);
+        categoryCell.textContent = getCategoryName(item.category);
+        
+        // Create price cell
+        const priceCell = document.createElement('td');
+        priceCell.setAttribute('data-label', 'Fiyat');
+        priceCell.textContent = '₺' + item.price;
+        
+        // Create description cell
+        const descCell = document.createElement('td');
+        descCell.setAttribute('data-label', 'Açıklama');
+        descCell.textContent = item.description;
+        
+        // Create actions cell
+        const actionsCell = document.createElement('td');
+        actionsCell.setAttribute('data-label', 'İşlemler');
+        
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'item-actions';
+        
+        // Create edit button
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn-edit';
+        editBtn.onclick = function() { editItem(item.id); };
+        editBtn.innerHTML = '<i class="fas fa-edit"></i> Düzenle';
+        
+        // Create delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn-delete';
+        deleteBtn.onclick = function() { deleteItem(item.id); };
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Sil';
+        
+        actionsDiv.appendChild(editBtn);
+        actionsDiv.appendChild(deleteBtn);
+        actionsCell.appendChild(actionsDiv);
+        
+        // Append all cells to row
+        row.appendChild(imgCell);
+        row.appendChild(nameCell);
+        row.appendChild(categoryCell);
+        row.appendChild(priceCell);
+        row.appendChild(descCell);
+        row.appendChild(actionsCell);
+        
         tbody.appendChild(row);
     });
 }
@@ -137,7 +196,7 @@ function filterItems() {
     const searchTerm = document.getElementById('search-items').value.toLowerCase();
     const categoryFilter = document.getElementById('category-filter').value;
     
-    let filteredItems = menuItems.filter(item => {
+    let filteredItems = menuItems.filter(function(item) {
         const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
                              item.description.toLowerCase().includes(searchTerm);
         const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
@@ -157,7 +216,7 @@ function openAddItemModal() {
 
 // Edit item
 function editItem(id) {
-    const item = menuItems.find(item => item.id === id);
+    const item = menuItems.find(function(item) { return item.id === id; });
     if (!item) return;
     
     editingItemId = id;
@@ -182,27 +241,27 @@ function saveItem(event) {
     
     if (editingItemId) {
         // Edit existing item
-        const itemIndex = menuItems.findIndex(item => item.id === editingItemId);
+        const itemIndex = menuItems.findIndex(function(item) { return item.id === editingItemId; });
         if (itemIndex !== -1) {
             menuItems[itemIndex] = {
-                ...menuItems[itemIndex],
-                name,
-                category,
-                price,
-                description,
-                image
+                id: menuItems[itemIndex].id,
+                name: name,
+                category: category,
+                price: price,
+                description: description,
+                image: image
             };
         }
     } else {
         // Add new item
-        const newId = Math.max(...menuItems.map(item => item.id), 0) + 1;
+        const newId = Math.max.apply(Math, menuItems.map(function(item) { return item.id; })) + 1;
         menuItems.push({
             id: newId,
-            name,
-            category,
-            price,
-            description,
-            image
+            name: name,
+            category: category,
+            price: price,
+            description: description,
+            image: image
         });
     }
     
@@ -216,7 +275,7 @@ function saveItem(event) {
 
 // Delete item
 function deleteItem(id) {
-    const item = menuItems.find(item => item.id === id);
+    const item = menuItems.find(function(item) { return item.id === id; });
     if (!item) return;
     
     deleteItemId = id;
@@ -227,7 +286,7 @@ function deleteItem(id) {
 // Confirm delete
 function confirmDelete() {
     if (deleteItemId) {
-        menuItems = menuItems.filter(item => item.id !== deleteItemId);
+        menuItems = menuItems.filter(function(item) { return item.id !== deleteItemId; });
         saveMenuItems();
         renderMenuItems();
         closeDeleteModal();
